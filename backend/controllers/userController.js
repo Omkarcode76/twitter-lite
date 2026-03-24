@@ -1,4 +1,4 @@
-import User from "../modles/userSchema"
+import User from "../modles/userSchema.js"
 import bcrypt from "bcrypt"
 
 const signup = async(req, res) => {
@@ -16,7 +16,10 @@ const signup = async(req, res) => {
   })
   res.status(201).json()
     } catch (err) {
+       
         res.status(400).json({field : "server", message : "server error"})
     }
   
 }
+
+export {signup}

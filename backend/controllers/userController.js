@@ -14,7 +14,7 @@ const signup = async(req, res) => {
     bio,
     profilePic,
   })
-  res.status(201).json()
+  res.status(201).json(user)
     } catch (err) {
        
         res.status(400).json({field : "server", message : "server error"})

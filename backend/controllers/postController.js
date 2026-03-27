@@ -10,10 +10,22 @@ const postPost = async (req, res) => {
       userId: user.userId,
     });
 
-    res.status(201).json({message : "Post created"});
+    res.status(201).json(post);
   } catch (error) {
     res.status(500).json({ message: "server error" });
   }
 };
 
-export { postPost };
+
+const getPost = async (req, res) => {
+    try {
+        const user = req.user
+        
+        const posts = await Post.find({userId: {$ne: user.userid}}).sort({createdAt: -1})
+        
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(500).json({ message: "server error" });
+    } 
+}
+export { postPost, getPost };

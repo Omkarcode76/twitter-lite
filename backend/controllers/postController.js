@@ -1,19 +1,19 @@
-import Post from "../modles/postSchema.js"
-
+import Post from "../modles/postSchema.js";
 
 const postPost = async (req, res) => {
-   try {
-     const {content, user} = req.body
-
+  try {
+    const { content } = req.body;
+    const user = req.user;
+    
     const post = await Post.create({
-        content,
-        user
-    })
+      content,
+      userId: user.userId,
+    });
 
-    res.status(201).json(post)
-   } catch (error) {
-    res.status(500).json({message : "server error"})
-   }
-}
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
+};
 
-export {postPost}
+export { postPost };

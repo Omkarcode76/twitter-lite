@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const signup = async (req, res) => {
   try {
     const { name, username, email, password, dob, bio, profilePic } = req.body;
+    console.log(req.body)
     const hashedPassword = await bcrypt.hash(password, 8);
     const user = await User.create({
       name,
@@ -16,7 +17,7 @@ const signup = async (req, res) => {
     });
     res.status(201).json(user);
   } catch (err) {
-    res.status(400).json({ field: "server", message: "server error" });
+    res.status(500).json({ field: "server", message: "server error" });
   }
 };
 

@@ -10,7 +10,7 @@ const postPost = async (req, res) => {
       userId: user.userId,
     });
 
-    res.status(201).json(post);
+    res.status(201).json({message : "Post created"});
   } catch (error) {
     res.status(500).json({ message: "server error" });
   }

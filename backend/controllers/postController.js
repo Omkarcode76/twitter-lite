@@ -21,7 +21,7 @@ const getPost = async (req, res) => {
     try {
         const user = req.user
         
-        const posts = await Post.find({userId: {$ne: user.userid}}).sort({createdAt: -1})
+        const posts = await Post.find({userId: {$ne: user.userid}}).populate("user", "name" "username" "profilepic").sort({createdAt: -1})
         
         res.status(200).json(posts)
     } catch (error) {

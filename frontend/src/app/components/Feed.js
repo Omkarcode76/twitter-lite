@@ -20,7 +20,7 @@ const Feed = () => {
   useEffect(() => {
     const getPosts = async () => {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/post", {
+    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/post`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const Feed = () => {
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/post", {
+    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/post`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

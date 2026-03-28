@@ -27,7 +27,7 @@ const Login = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/user/signup", {
+    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/user/signup`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -60,7 +60,7 @@ const Login = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3000/user/signin", {
+    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/user/signin`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

@@ -1,5 +1,6 @@
 "use client";
 import { use, useEffect, useState } from "react";
+
 import {
   User,
   Globe2,
@@ -73,7 +74,7 @@ const Feed = () => {
           <div className="p-4">
             <form onSubmit={(e) => handlePostSubmit(e)}>
               <div className="flex gap-3 items-center">
-                <User size={28} />
+                <img src="/default-avatar.png" alt="" className="h-10 w-10 rounded-full cursor-pointer"/>
                 <input
                   onClick={() => setshowWhoCanReply(true)}
                   onChange={(e) => setPostText(e.target.value)}
@@ -120,7 +121,7 @@ const Feed = () => {
           </div>
         </div>
         <div className="flex justify-center itemms-center py-4 border-y cursor-pointer border-gray-700">
-          <span className="text-blue-400">Show 175 posts</span>
+          <span className="text-blue-400">show posts</span>
         </div>
                 {posts.map(post=>
                   (<Postcard key={post._id} post={post}/>)

@@ -49,8 +49,8 @@ const Profile = () => {
 
   </div>
   <div className="profile relative">
-  <div className="h-40 w-full bg-[url('https://thumbs.dreamstime.com/b/programming-code-abstract-technology-background-software-deve-developer-computer-script-96434780.jpg')]  bg-cover bg-center"></div>
-    <div className="absolute top-24 left-5 border-3 border-black h-35 w-35 rounded-full bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6z3XY42aAbk9ZvNeOq1QYKtddf5aZcpB8aQ&s')] bg-cover bg-center "></div>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAN7rsVec_1OIcy3e8U_QpLUfC-dGJNH51Wg&s" alt="" className="h-40 w-full object-cover" />
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAN7rsVec_1OIcy3e8U_QpLUfC-dGJNH51Wg&s" alt="" className="absolute top-24 left-5 border-3 border-black h-35 w-35 rounded-full object-cover bg-center"/>
   <button onClick={()=>setShowEdit(true)} className="absolute top-43 right-5 rounded-full py-2 px-3 border-2 cursor-pointer hover:bg-gray-900 border-gray-700 font-bold">Edit profile</button>   
   </div> 
   <div className="mt-20 mb-6 mx-5 flex flex-col gap-3">
@@ -63,10 +63,6 @@ const Profile = () => {
     </div>
     <div className="border-y border-gray-700">
     <h2 className="text-3xl font-bold text-center my-7">Posts</h2>
-<Postcard/>
-<Postcard/>
-<Postcard/>
-<Postcard/>
 
     </div>
 </div>

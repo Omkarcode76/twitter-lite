@@ -11,7 +11,7 @@ const Login = () => {
     email: "",
     dob: "",
     username: "",
-    profileUrl: "",
+    profilePic: "",
     password: "",
   });
   const [signinData, setSigninData] = useState({
@@ -41,7 +41,7 @@ const Login = () => {
       email: "",
       dob: "",
       username: "",
-      profileUrl: "",
+      profilePic: "",
       password: "",
     };
     if (res.ok) {
@@ -156,8 +156,8 @@ const Login = () => {
                         <input
                           type="text"
                           onChange={(e) => handleSignupChange(e)}
-                          name="profileUrl"
-                          value={signupData.profileUrl}
+                          name="profilePic"
+                          value={signupData.profilePic}
                           className="w-full mb-4 p-2 bg-gray-900 rounded focus:outline-none border focus:border-blue-400"
                           placeholder="profile pic url"
                         />

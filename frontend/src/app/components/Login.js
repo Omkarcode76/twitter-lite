@@ -27,7 +27,9 @@ const Login = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/user/signup`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    const res = await fetch(`${API_URL}/user/signup`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -59,8 +61,8 @@ const Login = () => {
   };
   const handleSignin = async (e) => {
     e.preventDefault();
-
-    const res = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/user/signin`, {
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/user/signin`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

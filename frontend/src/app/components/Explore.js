@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, User, MoreHorizontalIcon } from "lucide-react";
+import { Search, User, } from "lucide-react";
 import Postcard from "./Postcard";
 const Explore = () => {
   return (
@@ -71,10 +71,7 @@ const Explore = () => {
       </div>
 <div>
   <h2 className="font-bold text-3xl text-center w-full py-4 border-b border-gray-700">Posts for you</h2>
-  <Postcard/>
-  <Postcard/>
-  <Postcard/>
-  <Postcard/>
+ 
 </div>
 
     </div>

@@ -6,6 +6,7 @@ const Login = () => {
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showSignupNext, setShowSignupNext] = useState(false);
+  const [loader, setLoader] = useState(false)
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",

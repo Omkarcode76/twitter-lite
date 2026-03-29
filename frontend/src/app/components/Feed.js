@@ -1,6 +1,6 @@
 "use client";
 import { use, useEffect, useState } from "react";
-
+import Loader from "./Loader";
 import {
   User,
   Globe2,
@@ -15,35 +15,38 @@ const Feed = () => {
   const [showWhoCanReply, setshowWhoCanReply] = useState(false);
   const [postText, setPostText] = useState("");
   const [posts, setPosts] = useState([]);
-  
-  
+  const [feedloader, setFeedLoader] = useState(false);
+  const [postingLoader, setPostingLoader] = useState(false)
   useEffect(() => {
-    const getPosts = async () => {  
-    const token = localStorage.getItem("token");
- const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-
-    const res = await fetch(`${API_URL}/post`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await res.json();
-    if(res.ok){
-      setPosts(data)
+    const getPosts = async () => {
       
-    }
+      const token = localStorage.getItem("token");
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+      setFeedLoader(true);
+      const res = await fetch(`${API_URL}/post`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFeedLoader(false);
+      const data = await res.json();
+      if (res.ok) {
+        setPosts(data);
+      }
+     
+    };
     
-  };
-  getPosts()
-   
-  }, [])
-  
+    getPosts();
+    
+  }, []);
+
   const handlePostSubmit = async (e) => {
     e.preventDefault();
+    setPostingLoader(true)
     const token = localStorage.getItem("token");
-    
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${API_URL}/post`, {
       method: "POST",
       headers: {
@@ -54,9 +57,12 @@ const Feed = () => {
         content: postText,
       }),
     });
+   
     const data = await res.json();
-    console.log(data);
+    const newPost = data
+    setPosts((prev)=>[newPost, ...prev])
     setPostText("");
+    setPostingLoader(false)
   };
 
   return (
@@ -78,7 +84,11 @@ const Feed = () => {
           <div className="p-4">
             <form onSubmit={(e) => handlePostSubmit(e)}>
               <div className="flex gap-3 items-center">
-                <img src="/default-avatar.png" alt="" className="h-10 w-10 rounded-full cursor-pointer"/>
+                <img
+                  src="/default-avatar.png"
+                  alt=""
+                  className="h-10 w-10 rounded-full cursor-pointer"
+                />
                 <input
                   onClick={() => setshowWhoCanReply(true)}
                   onChange={(e) => setPostText(e.target.value)}
@@ -111,14 +121,14 @@ const Feed = () => {
                 </div>
                 <button
                   type="submit"
-                  disabled={!postText}
+                  disabled={!postText || postingLoader}
                   className={
                     postText
                       ? "font-bold text-sm text-black rounded-full cursor-pointer bg-white px-3 py-2"
                       : "font-bold text-sm text-black rounded-full cursor-pointer bg-gray-400 px-3 py-2"
                   }
                 >
-                  Post
+                 {postingLoader ? (<span>Posting..</span>) : (<span>Post</span>)}
                 </button>
               </div>
             </form>
@@ -127,10 +137,11 @@ const Feed = () => {
         <div className="flex justify-center itemms-center py-4 border-y cursor-pointer border-gray-700">
           <span className="text-blue-400">show posts</span>
         </div>
-                {posts.map(post=>
-                  (<Postcard key={post._id} post={post}/>)
-                )}
-        
+        {feedloader ? (
+          <Loader />
+        ) : (
+          posts.map((post) => <Postcard key={post._id} post={post} />)
+        )}
       </div>
     </>
   );

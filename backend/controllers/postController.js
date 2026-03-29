@@ -9,8 +9,8 @@ const postPost = async (req, res) => {
       content,
       user: user.userId,
     });
-
-    res.status(201).json(post);
+  const populatedPost = await post.populate('user', "name username profilePic")
+    res.status(201).json(populatedPost);
   } catch (error) {
     res.status(500).json({ message: "server error" });
   }
@@ -21,7 +21,7 @@ const getPost = async (req, res) => {
     try {
         const user = req.user
         
-        const posts = await Post.find({user: {$ne: user.userId}}).populate("user",  "name username profilePic").sort({createdAt: -1})
+        const posts = await Post.find().populate("user",  "name username profilePic").sort({createdAt: -1})
         
         res.status(200).json(posts)
     } catch (error) {

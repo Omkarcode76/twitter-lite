@@ -44,7 +44,7 @@ const Postcard = ({post}) => {
       </div>
       <div className="ml-17 mr-5">
 
-      <div className="border border-gray-700  min-h-40  rounded-2xl p-4"><span>{post.content}</span>
+      <div className="border border-gray-700 min-h-20  rounded-2xl p-4"><span>{post.content}</span>
       </div>
       <div className="text-gray-400 flex gap-8 justify-around my-2">
         <div className="flex p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm "><Reply size={18}/> 1.3k</div>

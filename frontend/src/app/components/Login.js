@@ -14,7 +14,7 @@ const Login = () => {
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showSignupNext, setShowSignupNext] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [authLoader, setAuthLoader] = useState(false);
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
@@ -36,8 +36,8 @@ const Login = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setAuthLoader(true)
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: "POST",
       headers: {
@@ -60,6 +60,7 @@ const Login = () => {
       setShowSignup(false);
       setShowSignupNext(false);
     }
+    setAuthLoader(false)
   };
 
   const handleSigninChange = (e) => {
@@ -70,6 +71,7 @@ const Login = () => {
   };
   const handleSignin = async (e) => {
     e.preventDefault();
+    setAuthLoader(true)
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${API_URL}/auth/signin`, {
       method: "POST",
@@ -89,6 +91,7 @@ const Login = () => {
       setSigninData(initialState);
       router.push("/home");
     }
+    setAuthLoader(false)
   };
 
   return (
@@ -186,7 +189,7 @@ const Login = () => {
                           type="submit"
                           className="bg-white text-black w-full py-2 rounded cursor-pointer font-bold"
                         >
-                          Sign up
+                          {!authLoader ? (<span>Sign up</span>):(<span>Signing up...</span>)}
                         </button>
                       </>
                     )}
@@ -240,7 +243,7 @@ const Login = () => {
                       type="submit"
                       className="bg-white text-black w-full py-2 rounded cursor-pointer font-bold"
                     >
-                      Sign in
+                      {!authLoader ? (<span>Sign in</span>):(<span>Signing in...</span>)}
                     </button>
                   </form>
                   <button

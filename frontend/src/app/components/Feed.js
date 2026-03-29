@@ -2,6 +2,7 @@
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
+import apiFetch from "@/utils/api";
 import {
   User,
   Globe2,
@@ -24,19 +25,17 @@ const Feed = () => {
       const token = localStorage.getItem("token");
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       setFeedLoader(true);
-      const res = await fetch(`${API_URL}/post`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await apiFetch(
+        `${API_URL}/post`,
+        {
+          method: "GET",
         },
-      });
-      if (res.status === 401) {
-        router.push("/");
-        return;
-      }
+        router,
+      );
       setFeedLoader(false);
-      const data = await res.json();
+
       if (res.ok) {
+        const data = await res.json();
         setPosts(data);
       }
     };
@@ -144,6 +143,10 @@ const Feed = () => {
         </div>
         {feedloader ? (
           <Loader />
+        ) : !posts ? (
+          <h2 className="text-3xl font-bold text-center h-full p-5">
+            No posts yet
+          </h2>
         ) : (
           posts.map((post) => <Postcard key={post._id} post={post} />)
         )}

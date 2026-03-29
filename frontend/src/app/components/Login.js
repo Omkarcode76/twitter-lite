@@ -1,12 +1,20 @@
 "use client";
 import { Twitter } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.push("/home");
+    }
+  }, []);
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showSignupNext, setShowSignupNext] = useState(false);
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
@@ -38,7 +46,7 @@ const Login = () => {
       body: JSON.stringify(signupData),
     });
     const data = await res.json();
-   
+
     const initialState = {
       name: "",
       email: "",
@@ -62,7 +70,7 @@ const Login = () => {
   };
   const handleSignin = async (e) => {
     e.preventDefault();
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${API_URL}/auth/signin`, {
       method: "POST",
       headers: {
@@ -79,6 +87,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
     if (res.ok) {
       localStorage.setItem("token", data.token);
       setSigninData(initialState);
+      router.push("/home");
     }
   };
 
@@ -129,7 +138,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
                         <div className="flex mb-4 gap-7 items-center">
                           <span>DOB:</span>
                           <input
-                          onChange={(e) => handleSignupChange(e)}
+                            onChange={(e) => handleSignupChange(e)}
                             type="date"
                             name="dob"
                             className="w-full  bg-gray-600 p-2 text-white  focus:border-blue-400rounded border border-gray-700 focus:outline-none"

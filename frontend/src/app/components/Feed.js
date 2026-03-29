@@ -1,5 +1,6 @@
 "use client";
 import { use, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 import {
   User,
@@ -12,17 +13,16 @@ import {
 } from "lucide-react";
 import Postcard from "../components/Postcard";
 const Feed = () => {
+  const router = useRouter();
   const [showWhoCanReply, setshowWhoCanReply] = useState(false);
   const [postText, setPostText] = useState("");
   const [posts, setPosts] = useState([]);
   const [feedloader, setFeedLoader] = useState(false);
-  const [postingLoader, setPostingLoader] = useState(false)
+  const [postingLoader, setPostingLoader] = useState(false);
   useEffect(() => {
     const getPosts = async () => {
-      
       const token = localStorage.getItem("token");
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
       setFeedLoader(true);
       const res = await fetch(`${API_URL}/post`, {
         method: "GET",
@@ -30,21 +30,23 @@ const Feed = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      if (res.status === 401) {
+        router.push("/");
+        return;
+      }
       setFeedLoader(false);
       const data = await res.json();
       if (res.ok) {
         setPosts(data);
       }
-     
     };
-    
+
     getPosts();
-    
   }, []);
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    setPostingLoader(true)
+    setPostingLoader(true);
     const token = localStorage.getItem("token");
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${API_URL}/post`, {
@@ -57,12 +59,15 @@ const Feed = () => {
         content: postText,
       }),
     });
-   
+    if (res.status === 401) {
+      router.push("/");
+      return;
+    }
     const data = await res.json();
-    const newPost = data
-    setPosts((prev)=>[newPost, ...prev])
+    const newPost = data;
+    setPosts((prev) => [newPost, ...prev]);
     setPostText("");
-    setPostingLoader(false)
+    setPostingLoader(false);
   };
 
   return (
@@ -128,7 +133,7 @@ const Feed = () => {
                       : "font-bold text-sm text-black rounded-full cursor-pointer bg-gray-400 px-3 py-2"
                   }
                 >
-                 {postingLoader ? (<span>Posting..</span>) : (<span>Post</span>)}
+                  {postingLoader ? <span>Posting..</span> : <span>Post</span>}
                 </button>
               </div>
             </form>

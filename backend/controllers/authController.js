@@ -53,4 +53,8 @@ const signin = async (req, res) => {
     res.status(500).json({ message: "Server Error! try after some time" });
   }
 };
+
+const getUserData = async (req, res) => {
+  
+}
 export { signup, signin };

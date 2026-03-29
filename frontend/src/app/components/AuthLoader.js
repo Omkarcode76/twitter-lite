@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import { useRouter } from "next/navigation";
 import apiFetch from "@/utils/api";
-
 const AuthLoader = () => {
-  const { setUser } = useUser();
+  const { setUser, setUserPosts, setLoading } = useUser();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -20,9 +20,12 @@ const AuthLoader = () => {
       );
       if (!res) return;
       const data = await res.json();
-      setUser(data);
+      setUser(data.user);
+      setUserPosts(data.posts)
+      setLoading(false)
     };
     fetchUser();
+    
   }, []);
   return null;
 };

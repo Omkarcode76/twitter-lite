@@ -3,6 +3,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 import apiFetch from "@/utils/api";
+import { useUser } from "../context/UserContext";
 import {
   User,
   Globe2,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import Postcard from "../components/Postcard";
 const Feed = () => {
+  const {user} = useUser()
   const router = useRouter();
   const [showWhoCanReply, setshowWhoCanReply] = useState(false);
   const [postText, setPostText] = useState("");
@@ -88,8 +90,8 @@ const Feed = () => {
           <div className="p-4">
             <form onSubmit={(e) => handlePostSubmit(e)}>
               <div className="flex gap-3 items-center">
-                <img
-                  src="/default-avatar.png"
+               <img
+                  src={user?.profilePic || "/default-avatar.png"}
                   alt=""
                   className="h-10 w-10 rounded-full cursor-pointer"
                 />

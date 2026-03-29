@@ -8,7 +8,9 @@ const{username} = await params
 <div className="">
       <div className="relative h-screen flex overflow-hidden">
         <div className="overflow-y-auto overscroll-none no-scrollbar ">
+          <div className="w-[600px] border-x border-gray-700 min-h-screen">
           <Profile />
+          </div>
         </div>
         <div className="overflow-y-auto overscroll-none no-scrollbar">
           <RightSection />

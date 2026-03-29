@@ -1,7 +1,6 @@
 "use client";
 import {
   HomeIcon,
-  LucideHome,
   Search,
   Bell,
   User2,
@@ -13,13 +12,14 @@ import {
   MoreHorizontalIcon,
   Twitter,
   User,
-  Book,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUser } from "../context/UserContext";
 const Navbar = () => {
+  const {user} = useUser()
   const pathname = usePathname();
-  console.log(pathname);
+  
   return (
     <nav className=" w-[275px] transition py-3 flex flex-col gap-20">
       <div>
@@ -145,11 +145,17 @@ const Navbar = () => {
           Post
         </button>
       </div>
-      <div className="flex items-center gap-4 hover:bg-gray-900 rounded-full transition py-3 w-fit px-2 cursor-pointer">
-        <User size={28} />
+      <div className="flex items-center gap-4 hover:bg-gray-900 justify-between px-4 rounded-full transition py-3 w-full px-2 cursor-pointer">
+        <div className="flex items-center gap-4">
+        <img
+                  src={user?.profilePic || "/default-avatar.png"}
+                  alt=""
+                  className="h-10 w-10 rounded-full cursor-pointer"
+                />
         <div className="flex flex-col">
-          <span>omkar tembhekar</span>
-          <span className="text-gray-500"> @TembheakrO1234</span>
+          <span>{user?.name}</span>
+          <span className="text-gray-500"> {user?.username}</span>
+        </div>
         </div>
         <MoreHorizontalIcon size={20} />
       </div>

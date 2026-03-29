@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { signup, signin } from "../controllers/authController.js";
-const userRoutes = Router()
+import { getUserData } from "../controllers/userController.js";
 
-userRoutes.post('/signup',signup)
-userRoutes.post('/signin', signin)
-export default userRoutes
+const userRouter = Router()
+
+userRouter.get()
+
+export default userRouter

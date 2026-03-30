@@ -19,9 +19,7 @@ import { useUser } from "../context/UserContext";
 const Navbar = () => {
   const {user, loading} = useUser()
   const pathname = usePathname();
-  if(loading){
-    return null
-  }
+  
   return (
     <nav className=" w-[275px] transition py-3 flex flex-col gap-20">
       <div>
@@ -122,10 +120,10 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="w-full">
-            <Link href={`/${user.username}`} className="block w-full group">
+            <Link href={`/${user?.username}`} className="block w-full group">
               <div className=" px-4 w-fit cursor-pointer transition py-3 group-hover:bg-gray-900 rounded-full  flex items-center gap-4">
-                <User2 strokeWidth={pathname === `/${user.username}` ? 3 : 1} size={22} />
-                <div className={pathname === `/${user.username}` ? "font-bold" : ""}>
+                <User2 strokeWidth={pathname === `/${user?.username}` ? 3 : 1} size={22} />
+                <div className={pathname === `/${user?.username}` ? "font-bold" : ""}>
                   Profile
                 </div>
               </div>
@@ -147,6 +145,7 @@ const Navbar = () => {
           Post
         </button>
       </div>
+      
       <div className="flex items-center gap-4 hover:bg-gray-900 justify-between px-4 rounded-full transition py-3 w-full px-2 cursor-pointer">
         <div className="flex items-center gap-4">
         <img
@@ -161,6 +160,7 @@ const Navbar = () => {
         </div>
         <MoreHorizontalIcon size={20} />
       </div>
+
     </nav>
   );
 };

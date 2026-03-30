@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import EditProfile from "./EditProfile";
 
 const Profile = () => {
-  const { user, userPosts, loading } = useUser();
+  const { user, setUser, userPosts, loading } = useUser();
   const [showEdit, setShowEdit] = useState(false);
   if (loading) {
     return (
@@ -116,7 +116,7 @@ const Profile = () => {
         </div>
       </div>
       {showEdit && (
-        <EditProfile setShowEdit={setShowEdit}/>
+        <EditProfile setShowEdit={setShowEdit} setUser={setUser}/>
       )}
     </>
   );

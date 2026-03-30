@@ -14,4 +14,23 @@ const getCurrentUserData = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
-export { getCurrentUserData };
+
+const updateUser = async (req, res) => {
+ try {
+   const userId = req.user.userId
+  const {name, dob, bio, profilePic, bgImage} = req.body
+  const updatedUser = await User.findByIdAndUpdate(userId,{
+    name,
+    dob,
+    bio,
+    profilePic,
+    bgImage,
+  })
+
+  res.status(200).json(updatedUser)
+ } catch (error) {
+  res.status(500).json({message: "server error"})
+  
+ }
+}
+export { getCurrentUserData, updateUser};

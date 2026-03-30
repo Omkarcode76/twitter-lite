@@ -87,7 +87,8 @@ const Profile = () => {
                 <span className="font-bold text-xl">{user.name}</span>
                 <span className="text-lg text-gray-400">@{user.username}</span>
               </div>
-              <div className="text-lg text-gray-400">Joined {formatted} </div>
+              <span>{user.bio}</span>
+              <div className="text-gray-400">Joined {formatted} </div>
               <div className="flex gap-4">
                 <div className="text-sm hover:underline cursor-pointer  ">
                   <span className="font-bold">{user.following.length} </span>

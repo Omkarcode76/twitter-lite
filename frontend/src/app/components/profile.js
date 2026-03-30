@@ -1,22 +1,24 @@
 "use client";
 import { Search, ArrowLeft, Twitter, X, Dice1 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import Postcard from "./Postcard";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import Loader from "./Loader";
+
 const Profile = () => {
   const { user, userPosts, loading } = useUser();
   const [showEdit, setShowEdit] = useState(false);
-  if(loading){
+  if (loading) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
         <Loader />
       </div>
-    )
+    );
   }
-  if(!user){
-    return null
+  if (!user) {
+    return null;
   }
   const date = new Date(user.createdAt);
 
@@ -41,7 +43,9 @@ const Profile = () => {
 
                     <div className="flex flex-col leading-tight">
                       <span className="font-bold text-lg">{user.name}</span>
-                      <span className="text-sm text-gray-400">{userPosts.length} posts</span>
+                      <span className="text-sm text-gray-400">
+                        {userPosts.length} posts
+                      </span>
                     </div>
                   </div>
 
@@ -57,6 +61,7 @@ const Profile = () => {
                 alt=""
                 className="h-40 w-full object-cover"
               />
+
               <img
                 src={user.profilePic || "/default-avatar.png"}
                 alt=""
@@ -74,7 +79,7 @@ const Profile = () => {
                 <span className="font-bold text-xl">{user.name}</span>
                 <span className="text-lg text-gray-400">@{user.username}</span>
               </div>
-              <div className="text-lg text-gray-400">Joined {formatted}  </div>
+              <div className="text-lg text-gray-400">Joined {formatted} </div>
               <div className="flex gap-4">
                 <div className="text-sm hover:underline cursor-pointer  ">
                   <span className="font-bold">{user.following.length} </span>
@@ -89,15 +94,17 @@ const Profile = () => {
           </>
         )}
         <div className="">
-          <h2 className="text-3xl font-bold text-center py-7 border-y border-gray-700">Posts</h2>
+          <h2 className="text-3xl font-bold text-center py-7 border-y border-gray-700">
+            Posts
+          </h2>
 
-          {userPosts.length !== 0 ?
-          userPosts.map((post) => <Postcard key={post._id} post={post} />)
-          :
-          (<div className="h-40 text-2xl font-bold flex justify-center items-center">
-            No posts to show
-          </div>)
-          }
+          {userPosts.length !== 0 ? (
+            userPosts.map((post) => <Postcard key={post._id} post={post} />)
+          ) : (
+            <div className="h-40 text-2xl font-bold flex justify-center items-center">
+              No posts to show
+            </div>
+          )}
         </div>
       </div>
       {showEdit && (
@@ -111,9 +118,7 @@ const Profile = () => {
             </button>
             <form>
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold mb-4 ">
-                  Edit your profile
-                </h2>
+                <h2 className="text-2xl font-bold mb-4 ">Edit your profile</h2>
               </div>
               <input
                 name="name"

@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 import apiFetch from "@/utils/api";
@@ -135,7 +135,7 @@ const Feed = () => {
                   className={
                     postText
                       ? "font-bold text-sm text-black rounded-full cursor-pointer bg-white px-3 py-2"
-                      : "font-bold text-sm text-black rounded-full cursor-pointer bg-gray-400 px-3 py-2"
+                      : "font-bold text-sm text-black rounded-full bg-gray-400 px-3 py-2"
                   }
                 >
                   {postingLoader ? <span>Posting..</span> : <span>Post</span>}

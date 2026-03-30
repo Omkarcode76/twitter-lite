@@ -45,7 +45,11 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
-
+    bgImage: {
+      type: String,
+      default: "",
+    },
+    
     followers: [
       {
         type: Schema.Types.ObjectId,

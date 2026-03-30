@@ -124,8 +124,8 @@ const Navbar = () => {
           <li className="w-full">
             <Link href={`/${user.username}`} className="block w-full group">
               <div className=" px-4 w-fit cursor-pointer transition py-3 group-hover:bg-gray-900 rounded-full  flex items-center gap-4">
-                <User2 strokeWidth={pathname === '/omkar' ? 3 : 1} size={22} />
-                <div className={pathname === "/omkar" ? "font-bold" : ""}>
+                <User2 strokeWidth={pathname === `/${user.username}` ? 3 : 1} size={22} />
+                <div className={pathname === `/${user.username}` ? "font-bold" : ""}>
                   Profile
                 </div>
               </div>
@@ -134,7 +134,7 @@ const Navbar = () => {
           <li className="w-full">
             <Link href={"/home"} className="block w-full group">
               <div className=" px-4 w-fit cursor-pointer transition py-3 group-hover:bg-gray-900 rounded-full  flex items-center gap-4">
-                <HomeIcon size={22} />
+                <MoreHorizontalIcon size={22} />
                 <div className={pathname === "/more" ? "font-bold" : ""}>
                   More
                 </div>

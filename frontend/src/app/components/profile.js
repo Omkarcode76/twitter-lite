@@ -56,11 +56,18 @@ const Profile = () => {
               </div>
             </div>
             <div className="profile relative">
-              <img
-                src={user.profilePic || "/default-avatar.png"}
+              {user.bgImage ?
+              ( <img
+                src={user.bgImage}
                 alt=""
-                className="h-40 w-full object-cover"
-              />
+                className="h-42  w-full object-cover"
+              />)
+            :
+            (
+              <div className="h-40 w-full bg-gray-800"></div>
+            )
+            }
+             
 
               <img
                 src={user.profilePic || "/default-avatar.png"}

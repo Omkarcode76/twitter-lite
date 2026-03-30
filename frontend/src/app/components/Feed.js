@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import Postcard from "../components/Postcard";
 const Feed = () => {
-  const {user} = useUser()
+  const {user, setUserPosts} = useUser()
   const router = useRouter();
   const [showWhoCanReply, setshowWhoCanReply] = useState(false);
   const [postText, setPostText] = useState("");
@@ -64,11 +64,15 @@ const Feed = () => {
       router.push("/");
       return;
     }
-    const data = await res.json();
+   if(res.ok){
+     const data = await res.json();
     const newPost = data;
     setPosts((prev) => [newPost, ...prev]);
+    setUserPosts((prev) => [newPost, ...prev])
     setPostText("");
     setPostingLoader(false);
+
+   }
   };
 
   return (
@@ -144,7 +148,7 @@ const Feed = () => {
           <span className="text-blue-400">show posts</span>
         </div>
         {feedloader ? (
-          <Loader />
+         <div className="w-full my-10 flex justify-center items-center"><Loader/></div>
         ) : !posts ? (
           <h2 className="text-3xl font-bold text-center h-full p-5">
             No posts yet

@@ -29,7 +29,6 @@ const Profile = () => {
       <div className="relative">
         {user && (
           <>
-            {" "}
             <div className="sticky top-0 z-10 backdrop-blur-md bg-black/20">
               <div className="p-2">
                 <div className="flex justify-between items-center">
@@ -41,8 +40,8 @@ const Profile = () => {
                     </Link>
 
                     <div className="flex flex-col leading-tight">
-                      <span className="font-bold text-lg">Omkar Tembhekar</span>
-                      <span className="text-sm text-gray-400">0 posts</span>
+                      <span className="font-bold text-lg">{user.name}</span>
+                      <span className="text-sm text-gray-400">{userPosts.length} posts</span>
                     </div>
                   </div>
 
@@ -91,10 +90,9 @@ const Profile = () => {
         )}
         <div className="">
           <h2 className="text-3xl font-bold text-center py-7 border-y border-gray-700">Posts</h2>
+
           {userPosts.length !== 0 ?
-          userPosts.map(post=>{
-            <Postcard key={post._id} post={post}/>
-          })
+          userPosts.map((post) => <Postcard key={post._id} post={post} />)
           :
           (<div className="h-40 text-2xl font-bold flex justify-center items-center">
             No posts to show

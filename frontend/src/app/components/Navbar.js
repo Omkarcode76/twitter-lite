@@ -17,9 +17,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "../context/UserContext";
 const Navbar = () => {
-  const {user} = useUser()
+  const {user, loading} = useUser()
   const pathname = usePathname();
-  
+  if(loading){
+    return null
+  }
   return (
     <nav className=" w-[275px] transition py-3 flex flex-col gap-20">
       <div>
@@ -120,7 +122,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="w-full">
-            <Link href={"/omkar"} className="block w-full group">
+            <Link href={`/${user.username}`} className="block w-full group">
               <div className=" px-4 w-fit cursor-pointer transition py-3 group-hover:bg-gray-900 rounded-full  flex items-center gap-4">
                 <User2 strokeWidth={pathname === '/omkar' ? 3 : 1} size={22} />
                 <div className={pathname === "/omkar" ? "font-bold" : ""}>
@@ -154,7 +156,7 @@ const Navbar = () => {
                 />
         <div className="flex flex-col">
           <span>{user?.name}</span>
-          <span className="text-gray-500"> {user?.username}</span>
+          <span className="text-gray-500"> @{user?.username}</span>
         </div>
         </div>
         <MoreHorizontalIcon size={20} />

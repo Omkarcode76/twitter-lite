@@ -5,7 +5,7 @@ import { useUser } from "../context/UserContext";
 import { useRouter } from "next/navigation";
 import apiFetch from "@/utils/api";
 const AuthLoader = () => {
-  const { setUser, setUserPosts, setLoading } = useUser();
+  const { setUser, userPosts, setUserPosts, setLoading } = useUser();
 
   const router = useRouter();
 
@@ -23,6 +23,7 @@ const AuthLoader = () => {
       setUser(data.user);
       setUserPosts(data.posts)
       setLoading(false)
+
     };
     fetchUser();
     

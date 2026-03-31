@@ -1,7 +1,9 @@
 import React from "react";
 import { Reply, Heart, Bookmark, Share, BarChart2, ArrowDownRightFromSquare } from "lucide-react";
 import { formatDistanceToNowStrictk, format } from "date-fns";
+import { useRouter } from "next/navigation";
 const Postcard = ({post}) => {
+  const router = useRouter()
   const formatTwitterTime = (date) => {
   const now = new Date();
   const postDate = new Date(date);
@@ -25,7 +27,7 @@ const Postcard = ({post}) => {
   return (
 <>
 <div className="border-t border-gray-700">
-      <div className="flex items-center gap-2 mx-4 my-2 cursor-pointer">
+      <div onClick={()=>router.push(`/${post.user.username}`)} className="flex items-center gap-2 mx-4 my-2 cursor-pointer">
         
           <img src={post.user.profilePic || "/default-avatar.png"} alt="" className="rounded-full object-cover w-10 h-10" />
        

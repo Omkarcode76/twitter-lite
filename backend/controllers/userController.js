@@ -6,7 +6,7 @@ const getCurrentUserData = async (req, res) => {
     const userId = req.user.userId;
     const user = await User.findOne({ _id: userId });
     const posts = await Post.find({ user: userId })
-      .populate("user")
+      .populate("user", "name username profilePic")
       .sort({ createdAt: -1 });
       const x = {user, posts}
     res.status(200).json({ user, posts });
@@ -17,6 +17,7 @@ const getCurrentUserData = async (req, res) => {
 
 const updateUser = async (req, res) => {
  try {
+  
    const userId = req.user.userId
   const {name, dob, bio, profilePic, bgImage} = req.body
   const updatedUser = await User.findByIdAndUpdate(userId,{
@@ -33,4 +34,18 @@ const updateUser = async (req, res) => {
   
  }
 }
-export { getCurrentUserData, updateUser};
+
+const getOtherUser = async (req, res) => {
+  try {
+    const {username} = req.params
+    const user = await User.findOne({username}).select("-password -email -dob -__v")
+    if(!user){
+      return res.status(404).json({message: "user not found"})
+    }
+    const userPosts = await Post.find({user: user._id}).populate("user", "name username profilePic")
+    res.status(200).json({user, userPosts})
+  } catch (error) {
+     res.status(500).json({message: "server error"})
+  }
+}
+export { getCurrentUserData, updateUser, getOtherUser};

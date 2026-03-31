@@ -87,7 +87,7 @@ const Feed = () => {
             <div onClick={()=>setShowFeed({
               showForYou : true,
               showFollowing : false,
-            })} className="h-full w-1/2 flex justify-center items-center cursor-pointer hover:bg-gray-800">
+            })} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
            {showFeed.showForYou ? (
             <div>
               <span className="">For you</span>
@@ -101,7 +101,7 @@ const Feed = () => {
             <div onClick={()=>setShowFeed({
               showForYou : false,
               showFollowing : true,
-            })} className="h-full w-1/2 flex justify-center items-center cursor-pointer hover:bg-gray-800">
+            })} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
             {showFeed.showFollowing ? (<div>
               <span>Following</span>
               <div className="h-1 w-18 absolute bottom-0 rounded-full bg-blue-400"></div>

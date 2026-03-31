@@ -48,4 +48,27 @@ const getOtherUser = async (req, res) => {
      res.status(500).json({message: "server error"})
   }
 }
-export { getCurrentUserData, updateUser, getOtherUser};
+
+const getTopUsers = async (req, res) => {
+  try {
+    console.log("top")
+    const topUsers = await User.aggregate([
+  {
+    $addFields: {
+      followersCount: { $size: "$followers" }
+    }
+  },
+  {
+    $sort: { followersCount: -1 }
+  },
+  {
+    $limit: 4
+  }
+]);
+
+res.status(200).json(topUsers)
+  } catch (error) {
+     res.status(500).json({message: "server error"})
+  }
+}
+export { getCurrentUserData, updateUser, getOtherUser, getTopUsers};

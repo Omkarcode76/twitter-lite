@@ -23,7 +23,7 @@ const AuthLoader = () => {
       setUser(data.user);
       setUserPosts(data.posts)
       setLoading(false)
-      console.log("authloader run")
+      
     };
     fetchUser();
     

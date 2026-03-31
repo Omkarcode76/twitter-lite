@@ -22,6 +22,10 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [feedloader, setFeedLoader] = useState(false);
   const [postingLoader, setPostingLoader] = useState(false);
+  const [showFeed, setShowFeed] = useState({
+    showForYou: true,
+    showFollowing: false,
+  })
   useEffect(() => {
     const getPosts = async () => {
       const token = localStorage.getItem("token");
@@ -79,14 +83,33 @@ const Feed = () => {
     <>
       <div className="relative w-[600px] min-h-screen border-x border-gray-700">
         <div className="sticky top-0 backdrop-blur-md bg-black/40">
-          <div className="flex font-bold justify-around py-5 border-b border-gray-700 relative">
-            <div className="">
+          <div className="flex font-bold h-14 border-b border-gray-700 relative">
+            <div onClick={()=>setShowFeed({
+              showForYou : true,
+              showFollowing : false,
+            })} className="h-full w-1/2 flex justify-center items-center cursor-pointer hover:bg-gray-800">
+           {showFeed.showForYou ? (
+            <div>
               <span className="">For you</span>
               <div className="h-1 w-14 absolute bottom-0 rounded-full bg-blue-400"></div>
             </div>
-            <div>
+           )
+          :
+          (<span className="text-gray-700">For you</span>)
+          } 
+            </div>
+            <div onClick={()=>setShowFeed({
+              showForYou : false,
+              showFollowing : true,
+            })} className="h-full w-1/2 flex justify-center items-center cursor-pointer hover:bg-gray-800">
+            {showFeed.showFollowing ? (<div>
               <span>Following</span>
               <div className="h-1 w-18 absolute bottom-0 rounded-full bg-blue-400"></div>
+            </div>)
+            : (
+              <span className="text-gray-700">Following</span>
+            )
+          }
             </div>
           </div>
         </div>

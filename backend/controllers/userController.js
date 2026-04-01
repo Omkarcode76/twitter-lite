@@ -50,8 +50,7 @@ const getOtherUser = async (req, res) => {
 }
 
 const getTopUsers = async (req, res) => {
-  try {
-    console.log("top")
+  try { 
     const topUsers = await User.aggregate([
   {
     $addFields: {

@@ -120,7 +120,7 @@ const Feed = () => {
                <img
                   src={user?.profilePic || "/default-avatar.png"}
                   alt=""
-                  className="h-10 w-10 rounded-full cursor-pointer"
+                  className="h-10 w-10 rounded-full cursor-pointer object-cover bg-center"
                 />
                 <input
                   onClick={() => setshowWhoCanReply(true)}

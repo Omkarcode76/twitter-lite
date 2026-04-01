@@ -1,7 +1,7 @@
 "use client"
 import Feed from "@/app/components/Feed";
 import RightSection from "@/app/components/RightSection";
-
+import { useUser } from "@/app/context/UserContext";
 const page = () => {
 
   return (

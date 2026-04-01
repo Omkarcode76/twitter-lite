@@ -2,8 +2,9 @@
 import { Twitter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useUser } from "../context/UserContext";
 const Login = () => {
+  const {setUser} = useUser()
   const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -88,6 +89,7 @@ const Login = () => {
     };
     if (res.ok) {
       localStorage.setItem("token", data.token);
+      setUser(data.user)
       setSigninData(initialState);
       router.push("/home");
     }

@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { UserProvider} from "./context/UserContext";
-import AuthLoader from "./components/AuthLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +26,6 @@ export default function RootLayout({ children }) {
     >
       <body>
         <UserProvider>
-          <AuthLoader />
           {children}
         </UserProvider>
       </body>

@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar"
-
+import AuthLoader from "../components/AuthLoader"
 const Mainlayout = ({children}) => {
   return (
     <div className="mx-60 flex min-h-full">
@@ -7,7 +7,7 @@ const Mainlayout = ({children}) => {
                 <Navbar />
               </div>
               <div className="ml-[275px]">
-
+              <AuthLoader/>
               {children}
               </div>
     </div>

@@ -42,19 +42,10 @@ const signin = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.status(200).json({
-      token,
-      user: {
-        username: user.username,
-        email: user.email,
-      },
-    });
+    res.status(200).json({token, user});
   } catch (error) {
     res.status(500).json({ message: "Server Error! try after some time" });
   }
 };
 
-const getUserData = async (req, res) => {
-  
-}
 export { signup, signin };

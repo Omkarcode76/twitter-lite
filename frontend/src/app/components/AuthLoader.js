@@ -12,7 +12,6 @@ const AuthLoader = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
       const res = await apiFetch(
         `${API_URL}/user/me`,
         { method: "GET" },

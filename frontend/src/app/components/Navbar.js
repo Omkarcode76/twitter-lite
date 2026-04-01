@@ -16,10 +16,11 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "../context/UserContext";
+import { useState } from "react";
 const Navbar = () => {
   const {user, loading} = useUser()
   const pathname = usePathname();
-  
+  const [showMenu, setShowMenu] = useState(false)
   return (
     <nav className=" w-[275px] transition py-3 flex flex-col gap-20">
       <div>
@@ -145,8 +146,17 @@ const Navbar = () => {
           Post
         </button>
       </div>
-      
-      <div className="flex items-center gap-4 hover:bg-gray-900 justify-between px-4 rounded-full transition py-3 w-full px-2 cursor-pointer">
+      {showMenu && (
+  <div className="absolute transition bottom-22 right-5 mt-2 w-48 bg-black border border-gray-700 rounded-xl shadow-lg">
+    <button className="block w-full text-left px-4 py-2 hover:bg-gray-800">
+      Add account
+    </button>
+    <button className="block w-full text-left px-4 py-2 hover:bg-gray-800">
+      Logout
+    </button>
+  </div>
+)}
+      <div onClick={()=> setShowMenu(!showMenu)} className="flex items-center gap-4 hover:bg-gray-900 justify-between px-4 rounded-full transition py-3 w-full px-2 cursor-pointer">
         <div className="flex items-center gap-4">
         <img
                   src={user?.profilePic || "/default-avatar.png"}

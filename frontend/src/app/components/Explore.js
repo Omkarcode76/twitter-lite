@@ -190,7 +190,7 @@ const Explore = () => {
           ))
         :
         (
-          <div className="h-72 flex justify-center py-10" ><Loader /></div>
+          <div className="h-72 flex justify-center " ><Loader /></div>
         )}
       </div>
       <div>

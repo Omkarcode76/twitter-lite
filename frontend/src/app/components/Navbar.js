@@ -17,10 +17,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 const Navbar = () => {
   const {user, loading} = useUser()
   const pathname = usePathname();
   const [showMenu, setShowMenu] = useState(false)
+  const router = useRouter()
+  const logout = () => {
+    localStorage.removeItem("token")
+    router.push('/')
+
+  }
+  
   return (
     <nav className=" w-[275px] transition py-3 flex flex-col gap-20">
       <div>
@@ -151,7 +160,7 @@ const Navbar = () => {
     <button className="block w-full text-left px-4 py-2 hover:bg-gray-800">
       Add account
     </button>
-    <button className="block w-full text-left px-4 py-2 hover:bg-gray-800">
+    <button onClick={()=> logout()} className="block w-full text-left px-4 py-2 hover:bg-gray-800">
       Logout
     </button>
   </div>

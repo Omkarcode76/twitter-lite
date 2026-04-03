@@ -70,4 +70,15 @@ res.status(200).json(topUsers)
      res.status(500).json({message: "server error"})
   }
 }
-export { getCurrentUserData, updateUser, getOtherUser, getTopUsers};
+
+const getSearchedUser = async (req, res) => {
+  try {
+    const search = req.query.search
+    const user = await User.find({$or:[{name: {$regex: search, $options: "i"}},
+    {username: {$regex: search, $options: "i"}}]}).select("-password -email -dob -__v")
+    res.status(200).json(user)
+  } catch (error) {
+     res.status(500).json({message: "server error"})
+  }
+}
+export { getCurrentUserData, updateUser, getOtherUser, getTopUsers, getSearchedUser};

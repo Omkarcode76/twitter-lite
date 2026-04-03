@@ -1,5 +1,4 @@
 import Profile from "@/app/components/profile"
-import RightSection from "@/app/components/RightSection"
 const page =async ({params}) => {
 const{username} = await params
   return (
@@ -12,9 +11,7 @@ const{username} = await params
           <Profile username={username} />
           </div>
         </div>
-        <div className="overflow-y-auto overscroll-none no-scrollbar">
-          <RightSection />
-        </div>
+        
       </div>
       </div>
    </>

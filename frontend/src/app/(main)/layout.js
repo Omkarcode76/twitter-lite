@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar"
 import AuthLoader from "../components/AuthLoader"
+import RightSection from "../components/RightSection"
 const Mainlayout = ({children}) => {
   return (
     <div className="mx-60 flex min-h-full">
@@ -10,6 +11,9 @@ const Mainlayout = ({children}) => {
               <AuthLoader/>
               {children}
               </div>
+              <div className="overflow-y-auto overscroll-none no-scrollbar">
+          <RightSection />
+        </div>
     </div>
   )
 }

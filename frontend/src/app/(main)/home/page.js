@@ -1,7 +1,6 @@
 "use client"
 import Feed from "@/app/components/Feed";
-import RightSection from "@/app/components/RightSection";
-import { useUser } from "@/app/context/UserContext";
+
 const page = () => {
 
   return (
@@ -11,9 +10,7 @@ const page = () => {
         <div className="overflow-y-auto overscroll-none no-scrollbar ">
           <Feed />
         </div>
-        <div className="overflow-y-auto overscroll-none no-scrollbar">
-          <RightSection />
-        </div>
+        
       </div>
       </div>
     </>

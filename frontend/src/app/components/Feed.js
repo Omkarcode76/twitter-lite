@@ -28,7 +28,6 @@ const Feed = () => {
   })
   useEffect(() => {
     const getPosts = async () => {
-      const token = localStorage.getItem("token");
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       setFeedLoader(true);
       const res = await apiFetch(

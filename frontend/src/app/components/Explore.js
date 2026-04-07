@@ -79,7 +79,6 @@ const Explore = () => {
   };
 
   const searchUser = async () => {
-    console.log("search user");
     const res = await apiFetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/find?search=${search}`,
       { method: "GET" },

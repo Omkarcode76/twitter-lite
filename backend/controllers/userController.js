@@ -42,7 +42,7 @@ const getOtherUser = async (req, res) => {
     if(!user){
       return res.status(404).json({message: "user not found"})
     }
-    const userPosts = await Post.find({user: user._id}).populate("user", "name username profilePic")
+    const userPosts = await Post.find({user: user._id}).populate("user", "name username profilePic _id")
     res.status(200).json({user, userPosts})
   } catch (error) {
      res.status(500).json({message: "server error"})
@@ -82,7 +82,37 @@ const getSearchedUser = async (req, res) => {
   }
 }
 
+const followSystem = async (req, res) => {
+  try {
+    const currentUserId = req.user.userId
+    const targetUserId = req.params.id
+   
+    const targetUser = await User.findByIdAndUpdate({_id: targetUserId},{
+      $push: {followers: currentUserId}
+    })
+     await User.findByIdAndUpdate({_id: currentUserId},{
+       $push: {following: targetUser._id}
+   })
+    res.status(200).json(targetUser._id)
+  } catch (error) {
+     res.status(500).json({message: "server error"})
+  }
+}
 
+const unfollow = async (req, res) => {
+  try {
+    const currentUserId = req.user.userId
+    const targetUserId = req.params.id
 
-
-export { getCurrentUserData, updateUser, getOtherUser, getTopUsers, getSearchedUser};
+    const targetUser = await User.findByIdAndUpdate({_id: targetUserId},{
+      $pull: {followers: currentUserId}
+    })
+     await User.findByIdAndUpdate({_id: currentUserId},{
+      $pull: {following: targetUser._id}
+    })
+    res.status(200).json(targetUser._id)
+  } catch (error) {
+    res.status(500).json({message: "server error"})
+  }
+}
+export { getCurrentUserData, updateUser, getOtherUser, getTopUsers, getSearchedUser, followSystem, unfollow};

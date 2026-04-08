@@ -17,7 +17,7 @@ const Profile = ({ username }) => {
   const [otherLoading, setOtherLoading] = useState(false);
   const [followClicked, setFollowClicked] = useState(false);
   const [UnfollowClicked, setUnFollowClicked] = useState(false);
-
+  const [isFollowingHover, setIsFollowingHover] = useState(false)
   useEffect(() => {
     if (!user) return;
 
@@ -148,15 +148,18 @@ const Profile = ({ username }) => {
                 </button>
               ) : user.following.includes(profileData._id) ? (
                 <button
+                  onMouseEnter={()=>setIsFollowingHover(true)}
+                  onMouseLeave={()=>setIsFollowingHover(false)}
                   onClick={() => {
                     handleUnfollow(profileData._id)
                     setUnFollowClicked(true);
                     setFollowClicked(false)
                   }}
                   disabled={UnfollowClicked}
-                  className="absolute top-52 right-5 rounded-full py-2 px-3 cursor-pointer bg-black  hover:bg-white hover:text-black text-white border border-gray-700 font-bold"
-                >
-                  Following
+                  className={!isFollowingHover ? "absolute top-52 right-5 rounded-full py-2 w-28  cursor-pointer bg-black  text-white border border-gray-700 font-bold"
+                :"absolute top-52 right-5 rounded-full py-2 w-28 cursor-pointer backdrop-blur-md bg-[rgb(244,33,46)]/10  text-[rgb(244,33,46)] border-[0.5px] border-[rgb(244,33,46)] font-bold"
+                }>
+                  {isFollowingHover ? <span>Unfollow</span> : <span>Following</span>}
                 </button>
               ) : (
                 <button
@@ -166,7 +169,7 @@ const Profile = ({ username }) => {
                     setUnFollowClicked(false)
                   }}
                   disabled={followClicked}
-                  className="absolute top-52 right-5 rounded-full py-2 px-3 cursor-pointer bg-white hover:bg-gray-200 text-black font-bold"
+                  className="absolute top-52 transition right-5 rounded-full py-2 w-22 cursor-pointer bg-white hover:bg-gray-200 text-black font-bold"
                 >
                   Follow
                 </button>

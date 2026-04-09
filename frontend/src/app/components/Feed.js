@@ -23,20 +23,23 @@ const Feed = () => {
   const [feedloader, setFeedLoader] = useState(false);
   const [postingLoader, setPostingLoader] = useState(false);
   const [showFeed, setShowFeed] = useState({
+
     showForYou: true,
     showFollowing: false,
   })
+  const [feedType, setFeedType] = useState("all")
   useEffect(() => {
     const getPosts = async () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       setFeedLoader(true);
       const res = await apiFetch(
-        `${API_URL}/post`,
+        `${API_URL}/post?feed=${feedType}`,
         {
           method: "GET",
         },
         router,
       );
+      
       setFeedLoader(false);
 
       if (res.ok) {
@@ -46,7 +49,7 @@ const Feed = () => {
     };
 
     getPosts();
-  }, []);
+  }, [feedType]);
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
@@ -83,10 +86,11 @@ const Feed = () => {
       <div className="relative w-[600px] min-h-screen border-x border-gray-700">
         <div className="sticky top-0 backdrop-blur-md bg-black/40">
           <div className="flex font-bold h-14 border-b border-gray-700 relative">
-            <div onClick={()=>setShowFeed({
+            <div onClick={()=>{setShowFeed({
               showForYou : true,
               showFollowing : false,
-            })} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
+            })
+            setFeedType("all")}} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
            {showFeed.showForYou ? (
             <div>
               <span className="">For you</span>
@@ -97,10 +101,11 @@ const Feed = () => {
           (<span className="text-gray-700">For you</span>)
           } 
             </div>
-            <div onClick={()=>setShowFeed({
+            <div onClick={()=>{setShowFeed({
               showForYou : false,
               showFollowing : true,
-            })} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
+            })
+            setFeedType("following")}} className="h-full w-1/2 flex justify-center items-center transition cursor-pointer hover:bg-gray-800">
             {showFeed.showFollowing ? (<div>
               <span>Following</span>
               <div className="h-1 w-18 absolute bottom-0 rounded-full bg-blue-400"></div>
@@ -171,9 +176,9 @@ const Feed = () => {
         </div>
         {feedloader ? (
          <div className="w-full my-10 flex justify-center items-center"><Loader/></div>
-        ) : !posts ? (
+        ) : posts.length === 0 ? (
           <h2 className="text-3xl font-bold text-center h-full p-5">
-            No posts yet
+            No posts to show
           </h2>
         ) : (
           posts.map((post) => <Postcard key={post._id} post={post} />)

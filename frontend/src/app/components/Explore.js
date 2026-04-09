@@ -181,8 +181,8 @@ const Explore = () => {
                   className="h-10 w-10 rounded-full cursor-pointer object-cover bg-center"
                 />
                 <div className="flex flex-col">
-                  <span>{user?.name}</span>
-                  <span className="text-gray-500"> @{user?.username}</span>
+                  <span>{user.name}</span>
+                  <span className="text-gray-500"> @{user.username}</span>
                 </div>
               </div>
             </div>

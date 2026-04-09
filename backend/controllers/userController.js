@@ -82,7 +82,7 @@ const getTopUsers = async (req, res) => {
         $limit: 4,
       },
     ]);
-    console.log(topUsers)
+
     res.status(200).json(topUsers);
   } catch (error) {
     res.status(500).json({ message: "server error" });

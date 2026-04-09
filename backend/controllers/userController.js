@@ -66,13 +66,23 @@ const getTopUsers = async (req, res) => {
         },
       },
       {
+        $project: {
+          _id: 1,
+          name: 1,
+          username: 1,
+          profilePic: 1,
+          bgImage: 1,
+
+        }
+      },
+      {
         $sort: { followersCount: -1 },
       },
       {
         $limit: 4,
       },
     ]);
-
+    console.log(topUsers)
     res.status(200).json(topUsers);
   } catch (error) {
     res.status(500).json({ message: "server error" });
@@ -98,7 +108,7 @@ const followSystem = async (req, res) => {
   try {
     const currentUserId = req.user.userId;
     const targetUserId = req.params.id;
-
+    
     const targetUser = await User.findByIdAndUpdate(
       { _id: targetUserId },
       {

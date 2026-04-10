@@ -1,10 +1,23 @@
 "use client";
+import apiFetch from "@/utils/api";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 const UserFollows = ({username,type}) => {
-      const [followType, setFollowType] = useState(type)
-  const router = useRouter();
+    const router = useRouter();
+    const [followType, setFollowType] = useState(type)
+    const [users, setUsers] = useState(null)
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+    const getUsers = async () => {
+        const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${username}/${type}`,{method: "GET"}, router)
+        const data = await res.json()
+        if(res.ok){
+            setUsers(data)
+        }
+    }
   return (
     <div className="">
       <div className="sticky top-0 z-10 backdrop-blur-md bg-black/20 ">
@@ -43,6 +56,32 @@ const UserFollows = ({username,type}) => {
                 </div>
             </div>
         </div>
+            <div className="mx-5 my-1">
+        {users && 
+        users.map((user)=>
+         <div key={user._id}
+        className="flex  gap-4 justify-between py-2 w-full cursor-pointer"
+      >
+        <div>
+        <div
+          onClick={() => router.push(`/${user.username}`)}
+          className="flex items-center gap-4"
+        >
+          <img
+            src={user.profilePic || "/default-avatar.png"}
+            alt=""
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <div className="flex flex-col">
+            <span className="hover:underline">{user.name}</span>
+            <span className="text-gray-500">@{user.username}</span>
+          <span>{user.bio}</span>
+          </div>
+        </div>
+        
+    </div>
+      </div>)}
+      </div>
       </div>
    
   );

@@ -72,8 +72,7 @@ const getTopUsers = async (req, res) => {
           username: 1,
           profilePic: 1,
           bgImage: 1,
-
-        }
+        },
       },
       {
         $sort: { followersCount: -1 },
@@ -108,7 +107,7 @@ const followSystem = async (req, res) => {
   try {
     const currentUserId = req.user.userId;
     const targetUserId = req.params.id;
-    
+
     const targetUser = await User.findByIdAndUpdate(
       { _id: targetUserId },
       {
@@ -149,7 +148,28 @@ const unfollow = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
-
+const getUserFollowers = async (req, res) => {
+  try {
+    const { username } = req.params;
+    
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: `user with username ${username} doesn't exists` });
+    }
+   
+    const followers = await User.find({
+  _id: { $in: user.following },
+})
+  .select("name username bio profilePic")
+  .sort({ createdAt: -1 });
+    
+    res.status(200).json(followers);
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
+};
 
 export {
   getCurrentUserData,
@@ -159,4 +179,5 @@ export {
   getSearchedUser,
   followSystem,
   unfollow,
+  getUserFollowers,
 };

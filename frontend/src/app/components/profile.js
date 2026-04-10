@@ -101,11 +101,11 @@ const Profile = ({ username }) => {
               <div className="p-2">
                 <div className="flex justify-between items-center">
                   <div className="flex gap-4 items-center">
-                    <Link href="/home">
-                      <button className="cursor-pointer p-2 rounded-full hover:bg-gray-900 transition">
+                    
+                      <button onClick={()=> router.back()} className="cursor-pointer p-2 rounded-full hover:bg-gray-900 transition">
                         <ArrowLeft size={22} />
                       </button>
-                    </Link>
+                    
 
                     <div className="flex flex-col leading-tight">
                       <span className="font-bold text-lg">

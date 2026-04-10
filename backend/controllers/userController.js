@@ -149,6 +149,8 @@ const unfollow = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
+
+
 export {
   getCurrentUserData,
   updateUser,

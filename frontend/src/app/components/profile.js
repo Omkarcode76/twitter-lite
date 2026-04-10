@@ -185,13 +185,13 @@ const Profile = ({ username }) => {
               <span>{profileData.bio}</span>
               <div className="text-gray-400">Joined {formatted} </div>
               <div className="flex gap-4">
-                <div className="text-sm hover:underline cursor-pointer  ">
+                <div onClick={()=> router.push(`/${profileData.username}/following`)} className="text-sm hover:underline cursor-pointer  ">
                   <span className="font-bold">
                     {profileData.following.length}{" "}
                   </span>
                   <span className="text-gray-400">Following</span>
                 </div>
-                <div className="text-sm hover:underline cursor-pointer ">
+                <div onClick={()=>router.push(`/${profileData.username}/followers`)} className="text-sm hover:underline cursor-pointer ">
                   <span className="font-bold">
                     {profileData.followers.length}{" "}
                   </span>

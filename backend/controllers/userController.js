@@ -160,7 +160,7 @@ const getUserFollowers = async (req, res) => {
     }
    
     const followers = await User.find({
-  _id: { $in: user.following },
+  _id: { $in: user.followers },
 })
   .select("name username bio profilePic")
   .sort({ createdAt: -1 });
@@ -171,6 +171,28 @@ const getUserFollowers = async (req, res) => {
   }
 };
 
+const getUserFollowing = async (req, res) => {
+  try {
+     const { username } = req.params;
+    
+    const user = await User.findOne({ username });
+        if (!user) {
+      return res
+        .status(404)
+        .json({ message: `user with username ${username} doesn't exists` });
+    }
+   
+    const following = await User.find({
+  _id: { $in: user.following },
+})
+  .select("name username bio profilePic")
+  .sort({ createdAt: -1 });
+    
+    res.status(200).json(following);
+  } catch (error) {
+    
+  }
+}
 export {
   getCurrentUserData,
   updateUser,
@@ -180,4 +202,5 @@ export {
   followSystem,
   unfollow,
   getUserFollowers,
+  getUserFollowing,
 };

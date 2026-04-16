@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCurrentUserData, updateUser, getOtherUser, getTopUsers, getSearchedUser, followSystem, unfollow, getUserFollowers } from "../controllers/userController.js";
+import { getCurrentUserData, updateUser, getOtherUser, getTopUsers, getSearchedUser, followSystem, unfollow, getUserFollowers, getUserFollowing } from "../controllers/userController.js";
 
 const userRouter = Router()
 
@@ -8,6 +8,7 @@ userRouter.get('/topusers', getTopUsers)
 userRouter.get('/find', getSearchedUser)
 userRouter.get('/:username', getOtherUser)
 userRouter.get('/:username/followers', getUserFollowers)
+userRouter.get('/:username/following', getUserFollowing)
 
 userRouter.post('/follow/:id', followSystem)
 

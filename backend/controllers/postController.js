@@ -27,7 +27,9 @@ const getPost = async (req, res) => {
       const user = await User.findById(userId);
       const posts = await Post.find({
         user: { $in: user.following },
-      }).populate("user", "name username profilePic").sort({ createdAt: -1 });
+      })
+        .populate("user", "name username profilePic")
+        .sort({ createdAt: -1 });
       res.status(200).json(posts);
     } else {
       const posts = await Post.find()
@@ -39,4 +41,27 @@ const getPost = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
-export { postPost, getPost };
+
+const toggleLike = async (req, res) => {
+ try {
+   const userId = req.user.userId;
+   
+  const post = await Post.findById(req.params.id);
+
+  const alreadyLiked = post.likes.includes(userId);
+    
+  if (!alreadyLiked) {
+    
+    post.likes.push(userId);
+  } else {
+    
+    post.likes.pull(userId);
+  }
+  await post.save();
+
+  res.status(200).json({ liked: !alreadyLiked, userId });
+ } catch (error) {
+  res.status(500).json({ message: "server error" });
+ }
+};
+export { postPost, getPost, toggleLike };

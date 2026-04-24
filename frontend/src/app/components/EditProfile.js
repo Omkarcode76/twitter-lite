@@ -42,7 +42,7 @@ const EditProfile = ({ setShowEdit, setUser }) => {
   };
   return (
     <div>
-      <div className="fixed inset-0 bg-black/70  backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 ">
         <div className="bg-black p-6 rounded-xl w-[500px]">
           <button
             onClick={() => setShowEdit(false)}

@@ -18,6 +18,7 @@ const Postcard = ({ post }) => {
   const { user } = useUser();
   const router = useRouter();
   const [likes, setLikes] = useState(post.likes || []);
+  const [clickedLike, setClickedLike] = useState(false)
    const isLiked = likes.some(
     (id) => id.toString() === user?._id.toString()
   );
@@ -58,6 +59,7 @@ const Postcard = ({ post }) => {
         }
       });
     }
+    setClickedLike(false)
   };
   return (
     <>
@@ -98,11 +100,14 @@ const Postcard = ({ post }) => {
             <div className="flex  group p-2 hover:text-green-300 rounded-full cursor-pointer transition items-center text-sm ">
               <div className="p-2 rounded-full group-hover:bg-green-300/12"><ArrowDownRightFromSquare size={18} /></div> 1.3k
             </div>
-            <div
+            <button
+            disabled={clickedLike}
               onClick={() => {
+                setClickedLike(true)
                 console.log();
                 handleLike(post._id);
               }}
+              
               className={
                 isLiked
                   ? "flex  group p-2 text-[#f91880] rounded-full cursor-pointer transition items-center text-sm"
@@ -110,7 +115,7 @@ const Postcard = ({ post }) => {
               }
             >
               <div className="group-hover:bg-[#f91880]/15 rounded-full p-2 "><Heart  fill={isLiked ? "currentColor": ""} size={18} /></div> <span>{likes.length}</span>
-            </div>
+            </button>
             <div className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
               <div className="p-2 rounded-full group-hover:bg-blue-400/15"><BarChart2 size={18} /></div>1.3k
             </div>

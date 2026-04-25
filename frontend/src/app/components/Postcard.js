@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
+import PostReplyCard from "./PostReplyCard";
 import {
-  Reply,
+  MessageCircle,
   Heart,
   Bookmark,
   Share,
-  
   BarChart2,
-  ArrowDownRightFromSquare,
+  Repeat,
 } from "lucide-react";
 import { formatDistanceToNowStrictk, format } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -19,6 +18,7 @@ const Postcard = ({ post }) => {
   const router = useRouter();
   const [likes, setLikes] = useState(post.likes || []);
   const [clickedLike, setClickedLike] = useState(false)
+  const [showReply, setShowReply] = useState(false)
    const isLiked = likes.some(
     (id) => id.toString() === user?._id.toString()
   );
@@ -64,9 +64,13 @@ const Postcard = ({ post }) => {
   return (
     <>
       <div className="border-t border-gray-700">
+        <div onClick={()=>
+          router.push(`${post.user.username}/status/${post._id}`)} className="cursor-pointer">
         <div
-          onClick={() => router.push(`/${post.user.username}`)}
-          className="flex items-center gap-2 mx-4 my-2 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation()
+            router.push(`/${post.user.username}`)}}
+          className="flex w-fit items-center gap-2 mx-4 my-2 cursor-pointer"
         >
           <img
             src={post.user.profilePic || "/default-avatar.png"}
@@ -84,9 +88,7 @@ const Postcard = ({ post }) => {
                 {formatTwitterTime(post.createdAt)}
               </span>
             </div>
-            <div>
-              <span className="font-bold text-sm">{post.title}</span>
-            </div>
+            
           </div>
         </div>
         <div className="ml-17 mr-5">
@@ -94,15 +96,19 @@ const Postcard = ({ post }) => {
             <span>{post.content}</span>
           </div>
           <div className="text-gray-400 flex gap-8 justify-around mb-2 mt-6">
-            <div className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
-              <div className="p-2 rounded-full group-hover:bg-blue-400/15"><Reply size={18} /></div>1.3k
-            </div>
-            <div className="flex  group p-2 hover:text-green-300 rounded-full cursor-pointer transition items-center text-sm ">
-              <div className="p-2 rounded-full group-hover:bg-green-300/12"><ArrowDownRightFromSquare size={18} /></div> 1.3k
-            </div>
+            <button onClick={(e)=>{
+              e.stopPropagation()
+              setShowReply(true)}} className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
+              <div className="p-2 rounded-full group-hover:bg-blue-400/15"><MessageCircle size={18} /></div>1.3k
+            </button>
+            <button className="flex  group p-2 hover:text-green-300 rounded-full cursor-pointer transition items-center text-sm ">
+              <div className="p-2 rounded-full group-hover:bg-green-300/12">
+                <Repeat size={18} /></div> 1.3k
+            </button>
             <button
             disabled={clickedLike}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation()
                 setClickedLike(true)
                 console.log();
                 handleLike(post._id);
@@ -116,20 +122,24 @@ const Postcard = ({ post }) => {
             >
               <div className="group-hover:bg-[#f91880]/15 rounded-full p-2 "><Heart  fill={isLiked ? "currentColor": ""} size={18} /></div> <span>{likes.length}</span>
             </button>
-            <div className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
+            <button className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
               <div className="p-2 rounded-full group-hover:bg-blue-400/15"><BarChart2 size={18} /></div>1.3k
-            </div>
+            </button>
             <div className="flex justify-center items-center gap-2">
-              <div className="flex  p-2 hover:bg-blue-400/15 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
+              <button className="flex  p-2 hover:bg-blue-400/15 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
                 <Bookmark size={18} />
-              </div>
-              <div className="flex hover:bg-blue-400/15 p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
+              </button>
+              <button className="flex hover:bg-blue-400/15 p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm ">
                 <Share size={18} />
-              </div>
+              </button>
             </div>
           </div>
         </div>
+        </div>
       </div>
+      {showReply &&
+      <PostReplyCard post={post} setShowReply={setShowReply}/>
+}
     </>
   );
 };

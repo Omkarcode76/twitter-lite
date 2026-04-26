@@ -17,7 +17,7 @@ const Profile = ({ username }) => {
   const [otherLoading, setOtherLoading] = useState(false);
   const [followClicked, setFollowClicked] = useState(false);
   const [UnfollowClicked, setUnFollowClicked] = useState(false);
-  const [isFollowingHover, setIsFollowingHover] = useState(false)
+  const [isFollowingHover, setIsFollowingHover] = useState(false);
   useEffect(() => {
     if (!user) return;
 
@@ -100,12 +100,13 @@ const Profile = ({ username }) => {
             <div className="sticky top-0 z-10 backdrop-blur-md bg-black/20">
               <div className="p-2">
                 <div className="flex justify-between items-center">
-                  <div className="flex gap-4 items-center">
-                    
-                      <button onClick={()=> router.back()} className="cursor-pointer p-2 rounded-full hover:bg-gray-900 transition">
-                        <ArrowLeft size={22} />
-                      </button>
-                    
+                  <div className="flex gap-6 items-center">
+                    <button
+                      onClick={() => router.back()}
+                      className="cursor-pointer p-2 rounded-full hover:bg-gray-900 transition"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
 
                     <div className="flex flex-col leading-tight">
                       <span className="font-bold text-lg">
@@ -148,25 +149,32 @@ const Profile = ({ username }) => {
                 </button>
               ) : user.following.includes(profileData._id) ? (
                 <button
-                  onMouseEnter={()=>setIsFollowingHover(true)}
-                  onMouseLeave={()=>setIsFollowingHover(false)}
+                  onMouseEnter={() => setIsFollowingHover(true)}
+                  onMouseLeave={() => setIsFollowingHover(false)}
                   onClick={() => {
-                    handleUnfollow(profileData._id)
+                    handleUnfollow(profileData._id);
                     setUnFollowClicked(true);
-                    setFollowClicked(false)
+                    setFollowClicked(false);
                   }}
                   disabled={UnfollowClicked}
-                  className={!isFollowingHover ? "absolute top-52 right-5 rounded-full py-2 w-28  cursor-pointer bg-black  text-white border border-gray-700 font-bold"
-                :"absolute top-52 right-5 rounded-full py-2 w-28 cursor-pointer backdrop-blur-md bg-[rgb(244,33,46)]/10  text-[rgb(244,33,46)] border-[0.5px] border-[rgb(244,33,46)] font-bold"
-                }>
-                  {isFollowingHover ? <span>Unfollow</span> : <span>Following</span>}
+                  className={
+                    !isFollowingHover
+                      ? "absolute top-52 right-5 rounded-full py-2 w-28  cursor-pointer bg-black  text-white border border-gray-700 font-bold"
+                      : "absolute top-52 right-5 rounded-full py-2 w-28 cursor-pointer backdrop-blur-md bg-[rgb(244,33,46)]/10  text-[rgb(244,33,46)] border-[0.5px] border-[rgb(244,33,46)] font-bold"
+                  }
+                >
+                  {isFollowingHover ? (
+                    <span>Unfollow</span>
+                  ) : (
+                    <span>Following</span>
+                  )}
                 </button>
               ) : (
                 <button
                   onClick={() => {
                     handleFollow(profileData._id);
                     setFollowClicked(true);
-                    setUnFollowClicked(false)
+                    setUnFollowClicked(false);
                   }}
                   disabled={followClicked}
                   className="absolute top-52 transition right-5 rounded-full py-2 w-22 cursor-pointer bg-white hover:bg-gray-200 text-black font-bold"
@@ -185,13 +193,23 @@ const Profile = ({ username }) => {
               <span>{profileData.bio}</span>
               <div className="text-gray-400">Joined {formatted} </div>
               <div className="flex gap-4">
-                <div onClick={()=> router.push(`/${profileData.username}/following`)} className="text-sm hover:underline cursor-pointer  ">
+                <div
+                  onClick={() =>
+                    router.push(`/${profileData.username}/following`)
+                  }
+                  className="text-sm hover:underline cursor-pointer  "
+                >
                   <span className="font-bold">
                     {profileData.following.length}{" "}
                   </span>
                   <span className="text-gray-400">Following</span>
                 </div>
-                <div onClick={()=>router.push(`/${profileData.username}/followers`)} className="text-sm hover:underline cursor-pointer ">
+                <div
+                  onClick={() =>
+                    router.push(`/${profileData.username}/followers`)
+                  }
+                  className="text-sm hover:underline cursor-pointer "
+                >
                   <span className="font-bold">
                     {profileData.followers.length}{" "}
                   </span>

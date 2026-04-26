@@ -1,24 +1,35 @@
 import { Schema, model } from "mongoose";
 
-const postSchema = new Schema({
+const postSchema = new Schema(
+  {
     content: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
-    likes: [{
+    likes: [
+      {
         type: Schema.Types.ObjectId,
         ref: "User",
-        
-}],
-    user: {
-        type : Schema.Types.ObjectId,
-        ref : "User",
-        required : true
+      },
+    ],
+    originalPost: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      default: null,
     },
-},
-    {timestamps : true}
+    parentPost: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      default: null,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
 
-)
-
-export default model('Post', postSchema)
+export default model("Post", postSchema);

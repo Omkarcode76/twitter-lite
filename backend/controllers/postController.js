@@ -19,6 +19,23 @@ const postPost = async (req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await Post.findById(id).populate(
+      "user",
+      "name username profilePic",
+    );
+    if (!post) {
+      return res.status(404).json({ message: "post doesn't exist" });
+    }
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
+};
+
 const getPost = async (req, res) => {
   try {
     const feedType = req.query.feed;
@@ -43,25 +60,25 @@ const getPost = async (req, res) => {
 };
 
 const toggleLike = async (req, res) => {
- try {
-   const userId = req.user.userId;
-   
-  const post = await Post.findById(req.params.id);
+  try {
+    const userId = req.user.userId;
 
-  const alreadyLiked = post.likes.includes(userId);
-    
-  if (!alreadyLiked) {
-    
-    post.likes.push(userId);
-  } else {
-    
-    post.likes.pull(userId);
+    const post = await Post.findById(req.params.id);
+
+    const alreadyLiked = post.likes.includes(userId);
+
+    if (!alreadyLiked) {
+      post.likes.push(userId);
+    } else {
+      post.likes.pull(userId);
+    }
+    await post.save();
+
+    res.status(200).json({ liked: !alreadyLiked, userId });
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
   }
-  await post.save();
-
-  res.status(200).json({ liked: !alreadyLiked, userId });
- } catch (error) {
-  res.status(500).json({ message: "server error" });
- }
 };
-export { postPost, getPost, toggleLike };
+const replyPost = async (params) => {};
+
+export { postPost, getPost, toggleLike, replyPost, getPostById };

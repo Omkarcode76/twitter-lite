@@ -5,7 +5,6 @@ import Loader from "./Loader";
 import apiFetch from "@/utils/api";
 import { useUser } from "../context/UserContext";
 import {
-  User,
   Globe2,
   Smile,
   CalendarClock,

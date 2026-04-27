@@ -16,6 +16,17 @@ const PostReplyCard = ({ post, setShowReply }) => {
   const [postText, setPostText] = useState("");
   const { user } = useUser();
 
+  const handleReply = async (postId) => {
+    const res = await apiFetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/post/reply/${postId}`,
+      { method: "POST", body: JSON.stringify({ content: postText }) },
+      router,
+    );
+    const data = await res.json()
+    if(res.ok){
+      console.log(data)
+    }
+  };
   return (
     <div className="fixed inset-0  bg-black/70 flex items-center justify-center z-50 ">
       <div className="absolute top-15 left-[33.6vw] bg-black w-[600px] min-h-[350px]  rounded-2xl">
@@ -80,6 +91,7 @@ const PostReplyCard = ({ post, setShowReply }) => {
             <GalleryThumbnails size={18} className="cursor-pointer" />
           </div>
           <button
+            onClick={() => handleReply(post._id)}
             disabled={!postText}
             className={
               postText

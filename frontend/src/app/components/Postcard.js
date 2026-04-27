@@ -17,9 +17,8 @@ const Postcard = ({ post }) => {
   const { user } = useUser();
   const router = useRouter();
   const [likes, setLikes] = useState(post.likes || []);
-
   const [clickedLike, setClickedLike] = useState(false);
-  const [showReply, setShowReply] = useState(false);
+  const [showReplyCard, setShowReplyCard] = useState(false);
   const isLiked = likes.some((id) => id.toString() === user?._id.toString());
   const formatTwitterTime = (date) => {
     const now = new Date();
@@ -66,7 +65,7 @@ const Postcard = ({ post }) => {
       <div className="border-b border-gray-700">
         <div
           onClick={() =>
-            router.push(`${post.user.username}/status/${post._id}`)
+            router.push(`/${post.user.username}/status/${post._id}`)
           }
           className="cursor-pointer"
         >
@@ -103,7 +102,7 @@ const Postcard = ({ post }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowReply(true);
+                  setShowReplyCard(true);
                 }}
                 className="flex  group p-2 hover:text-blue-400 rounded-full cursor-pointer transition items-center text-sm "
               >
@@ -154,7 +153,7 @@ const Postcard = ({ post }) => {
           </div>
         </div>
       </div>
-      {showReply && <PostReplyCard post={post} setShowReply={setShowReply} />}
+      {showReplyCard && <PostReplyCard post={post} setShowReply={setShowReplyCard} />}
     </>
   );
 };

@@ -5,7 +5,7 @@ const getCurrentUserData = async (req, res) => {
   try {
     const userId = req.user.userId;
     const user = await User.findOne({ _id: userId });
-    const posts = await Post.find({ user: userId })
+    const posts = await Post.find({ user: userId, parentPost: null })
       .populate("user", "name username profilePic")
       .sort({ createdAt: -1 });
     const x = { user, posts };
@@ -42,7 +42,7 @@ const getOtherUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }
-    const userPosts = await Post.find({ user: user._id }).populate(
+    const userPosts = await Post.find({ user: user._id, parentPost: null }).populate(
       "user",
       "name username profilePic _id",
     );

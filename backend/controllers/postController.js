@@ -49,7 +49,8 @@ const getPost = async (req, res) => {
         .sort({ createdAt: -1 });
       res.status(200).json(posts);
     } else {
-      const posts = await Post.find()
+      const posts = await Post.find({parentPost: null}
+      )
         .populate("user", "name username profilePic")
         .sort({ createdAt: -1 });
       res.status(200).json(posts);
@@ -79,6 +80,43 @@ const toggleLike = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
-const replyPost = async (params) => {};
 
-export { postPost, getPost, toggleLike, replyPost, getPostById };
+const postReply = async (req, res) => {
+  try {
+    const {id} = req.params
+    const {content} = req.body
+    const {userId} = req.user
+    const parentPost = await Post.findById(id)
+    if(!parentPost){
+      return res.status(404).json({message: "Post deosn't exist"})
+    }
+    const replyPost = await Post.create({
+      content,
+      user: userId,
+      parentPost: parentPost._id
+    })
+    const populatedPost = await replyPost.populate(
+      "user",
+      "name username profilePic",
+    );
+    res.status(201).json(populatedPost)
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
+}
+
+const getAllReplies = async (req, res) => {
+  try {
+    const {id} = req.params
+    const parentPost = await Post.findById(id)
+    if(!parentPost){
+       return res.status(404).json({message: "Post deosn't exist"})
+    }
+    const replies = await Post.find({parentPost: id}).populate("user", "name username profilePic")
+    res.status(200).json(replies)
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
+}
+
+export { postPost, getPost, toggleLike, getPostById, postReply, getAllReplies };
